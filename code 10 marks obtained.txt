@@ -1,0 +1,65 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+void MinHeapify(vector<int>& arr, int n, int i) {
+    int smallest = i; 
+    int left = 2 * i + 1; 
+    int right = 2 * i + 2; 
+
+    if (left < n && arr[left] < arr[smallest]) 
+        smallest = left; 
+
+    if (right < n && arr[right] < arr[smallest]) 
+        smallest = right; 
+
+    if (smallest != i) { 
+        swap(arr[i], arr[smallest]); 
+        MinHeapify(arr, n, smallest); 
+    } 
+}
+
+void MaxHeapify(vector<int>& arr, int n, int i) {
+    int largest = i; 
+    int left = 2 * i + 1; 
+    int right = 2 * i + 2; 
+
+    if (left < n && arr[left] > arr[largest]) 
+        largest = left; 
+
+    if (right < n && arr[right] > arr[largest]) 
+        largest = right; 
+
+    if (largest != i) { 
+        swap(arr[i], arr[largest]); 
+        MaxHeapify(arr, n, largest); 
+    } 
+}
+
+int main() {
+    int n;
+    cout << "Enter No of Students: ";
+    cin >> n;
+
+    vector<int> arr(n);
+    cout << "Enter DSA Marks of " << n << " students : " << endl;
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i];
+    }
+
+    for (int i = n / 2 - 1; i >= 0; i--) {
+        MinHeapify(arr, n, i);
+    }
+
+    cout << "------------------------------" << endl;
+    cout << "Minimum Score: " << arr[0] << endl;
+
+    for (int i = n / 2 - 1; i >= 0; i--) {
+        MaxHeapify(arr, n, i);
+    }
+
+    cout << "------------------------------" << endl;
+    cout << "Max Score: " << arr[0] << endl;
+
+    return 0;
+}
